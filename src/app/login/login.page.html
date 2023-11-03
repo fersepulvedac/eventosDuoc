@@ -1,0 +1,27 @@
+<ion-content [fullscreen]="true">
+  <div id="contenido">
+    <div id="arribaLogin">
+      <div class="logoLogin">
+        <img src="/assets/DUOC.png" alt="">
+      </div>
+    </div>
+    <div id="abajoLogin">
+      <div class="inputs">
+        <input type="text" placeholder="Nombre de usuario" [(ngModel)]="usuario" id="usuario">
+        <input type="password" placeholder="Clave de usuario" [(ngModel)]="clave" id="clave">
+      </div>
+      <div class="recordarme">
+        <div>
+          <input type="checkbox"> Recordarme
+        </div>
+        <div>
+          Olvidé mi clave
+        </div>
+      </div>
+      <button id="botonLogin" (click)="login()">Ingresar</button>
+      <p id="invitadoLogin" (click)="invitado()">Ingresar como invitado</p>
+    </div>
+    <!-- <ion-icon name="finger-print-outline" id="fingerprint"></ion-icon> -->
+  </div>
+
+</ion-content>

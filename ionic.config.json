@@ -1,5 +1,8 @@
 {
   "name": "EventosDuoc",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
   "type": "angular"
 }
