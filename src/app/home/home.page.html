@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" style="max-height: 100vh;">
   <div id="splash">
     <div class="logo-splash">
       <img src="/assets/DUOC.png" alt="">
@@ -20,7 +20,7 @@
         <p>&nbsp;</p>
         <ion-icon name="{{iconoTema}}" (click)="cambiaModo()" style="transform: scale(.9);" id="modo"></ion-icon>
       </div>
-      
+
     </header>
     <div id="cuerpo">
       <div class="calendar-container">
@@ -67,25 +67,60 @@
               </div>
             </div>
             <div class="opcionesEvento">
-              <ion-icon name="{{!event.notify?'notifications-off-outline':'notifications-outline'}}" (click)="agregarACalendario(event)" id="notificar{{event.id}}"  class="{{event.notify?'notificar':'no-notificar'}}"></ion-icon>
+              <ion-icon name="{{!event.notify?'notifications-off-outline':'notifications-outline'}}"
+                (click)="agregarACalendario(event)" id="notificar{{event.id}}"
+                class="{{event.notify?'notificar':'no-notificar'}}"></ion-icon>
             </div>
           </div>
         </div>
       </div>
+      <div id="opciones-modo">
+        <div class="icon-opciones-modo">
+          <ion-icon src="/assets/dia.svg" (click)="cambiaVista('day')">dia</ion-icon>
+          <p>dia</p>
+        </div>
+        <div class="icon-opciones-modo">
+          <ion-icon src="/assets/semana.svg" (click)="cambiaVista('week')"></ion-icon>
+          <p>semana</p>
+        </div>
+        <div class="icon-opciones-modo">
+          <ion-icon src="/assets/mes.svg" (click)="cambiaVista('month')"></ion-icon>
+          <p>mes</p>
+        </div>
+        <!-- <ion-icon src="/assets/dia.svg" (click)="cambiaVista('day')">dia</ion-icon>
+        <ion-icon src="/assets/semana.svg" (click)="cambiaVista('week')"></ion-icon>
+        <ion-icon src="/assets/mes.svg" (click)="cambiaVista('month')"></ion-icon> -->
+      </div>
     </div>
-    <div id="opciones-modo">
-      <ion-icon src="/assets/dia.svg" (click)="cambiaVista('day')">dia</ion-icon>
-      <ion-icon src="/assets/semana.svg" (click)="cambiaVista('week')"></ion-icon>
-      <ion-icon src="/assets/mes.svg" (click)="cambiaVista('month')"></ion-icon>
-    </div>
+
     <footer>
-      <ion-icon src="/assets/mes.svg" (click)="toggleOpcionesModo(true)"></ion-icon>
-      <ion-icon name="caret-back" (click)="myCal.slidePrev()"></ion-icon>
-      <ion-icon name="today" (click)="today()"></ion-icon>
-      <ion-icon name="add-circle" (click)="setOpen(true)" ></ion-icon>
-      <!-- *ngIf="admin" -->
-      <ion-icon name="caret-forward" (click)="myCal.slideNext()"></ion-icon>
-      
+      <div class="footer">
+
+
+        <div class="icon-footer">
+          <ion-icon src="/assets/{{calendar.mode=='day'?'dia':(calendar.mode=='month'?'mes':'semana')}}.svg"
+            (click)="toggleOpcionesModo()"></ion-icon>
+          <p>modo</p>
+        </div>
+
+        <div class="icon-footer">
+          <ion-icon name="caret-back" (click)="myCal.slidePrev()"></ion-icon>
+          <p>anterior</p>
+        </div>
+
+        <div class="icon-footer">
+          <ion-icon name="today" (click)="today()"></ion-icon>
+          <p>hoy</p>
+        </div>
+        <div class="icon-footer">
+          <ion-icon name="add-circle" (click)="setOpen(true)"></ion-icon>
+          <p>nuevo</p>
+        </div>
+        <div class="icon-footer">
+          <ion-icon name="caret-forward" (click)="myCal.slideNext()"></ion-icon>
+          <p>siguiente</p>
+        </div>
+      </div>
     </footer>
   </div>
 
@@ -95,43 +130,47 @@
         <div class="inputs">
           <h1 class="tituloPrincipal">Nuevo Evento</h1>
           <div class="input">
-            <label for="">Titulo</label>
-            <input type="text" placeholder="GameFest infotel 2023" [(ngModel)]="newEvent.title" maxlength="25">
+            <label for="">Titulo</label> 
+            <input type="text" placeholder="GameFest infotel 2023" [(ngModel)]="newEvent.title" maxlength="25" id="input-titulo">
             <div class="caracteres">{{newEvent.title.length}}/25</div>
           </div>
-          <div class="dates">            
+          <div class="dates">
             <div class="inputDates">
               <div class="input">
                 <label for="" (click)="showInicio = !showInicio">Inicio</label>
-                <ion-datetime-button datetime="inicio" presentation="datetime"></ion-datetime-button>
+                <ion-datetime-button datetime="inicio" presentation="datetime" [disabled]="newEvent.allDay"></ion-datetime-button>
               </div>
               <div class="input datetimeinput">
                 <label for="" (click)="showTermino = !showTermino">Termino</label>
-                <ion-datetime-button datetime="termino" presentation="datetime"></ion-datetime-button>
+                <ion-datetime-button datetime="termino" presentation="datetime" [disabled]="newEvent.allDay"></ion-datetime-button>
               </div>
             </div>
-            <div class="input todo-el-dia" >
+            <div class="input todo-el-dia">
               <label for="">Todo el día</label>
-              <div class="{{newEvent.allDay?'checked':'unchecked'}}" (click)="checkear()">
+              <div class="{{newEvent.allDay?'checked':'unchecked'}}" (click)="newEvent.allDay = !newEvent.allDay" id="inputallday">
+              <!-- <div class="{{newEvent.allDay?'checked':'unchecked'}}" (click)="checkear()">S -->
                 <img src="/assets/check.png" alt="">
               </div>
             </div>
           </div>
           <div class="input">
             <label for="">Organiza</label>
-            <input type="text" placeholder="Sede Melipilla" [(ngModel)]="newEvent.sponsor">
+            <input type="text" placeholder="Sede Melipilla" [(ngModel)]="newEvent.sponsor" maxlength="25">
+            <div class="caracteres">{{newEvent.sponsor.length}}/25</div>
           </div>
           <div class="input">
             <label for="">Lugar</label>
-            <input type="text" placeholder="Auditorio" [(ngModel)]="newEvent.place">
+            <input type="text" placeholder="Auditorio" [(ngModel)]="newEvent.place" maxlength="25">
+            <div class="caracteres">{{newEvent.place.length}}/25</div>
           </div>
           <div class="input" style="height: 4.5rem;">
             <label for="">Descripción</label>
-            <textarea type="text" placeholder="Charla para dar a conocer el modelo educativo." [(ngModel)]="newEvent.description" maxlength="75"></textarea>
+            <textarea type="text" placeholder="Charla para dar a conocer el modelo educativo."
+              [(ngModel)]="newEvent.description" maxlength="75"></textarea>
             <div class="caracteres">{{newEvent.description.length}}/75</div>
           </div>
-          <button (click)="sheduleEvent()" id="agregar-evento">Agregar</button>
-          <button (click)="setOpen(false)" id="agregar-evento">Cancelar</button>
+          <button (click)="sheduleEvent()" id="agregar-evento">{{isEditingEvent?'Editar':'Agregar'}}</button>
+          <button (click)="setOpen(false);cancelarClick()" id="agregar-evento">Cancelar</button>
           <!-- <button (click)="sheduleNotification()">notificar</button>
           <button (click)="crearEvento()">calendario</button> -->
         </div>
@@ -153,15 +192,24 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal style="--height: auto" [isOpen]="isEventOpen" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (willDismiss)="isEventOpen = false">
+  <ion-modal style="--height: auto" [isOpen]="isEventOpen" [initialBreakpoint]="1" [breakpoints]="[0, 1]"
+    (willDismiss)="isEventOpen = false">
     <ng-template>
       <div class="block" *ngIf="evento">
         <div class="titulo-evento">{{evento.title}}</div>
         <div class="fecha-evento">
           <ion-icon name="calendar"></ion-icon>
           {{evento.startTime | date: 'dd/MM/yyyy'}}
-          <ion-icon name="time"></ion-icon>          
-          {{evento.startTime | date: 'HH:mm'}} - {{ evento.endTime | date: 'HH:mm'}}
+          <ion-icon name="time"></ion-icon>
+          <div *ngIf="evento.allDay; else elsetag">
+            Todo el día
+          </div>
+          <ng-template #elsetag>
+            <div>
+              {{evento.startTime | date: 'HH:mm'}} - {{ evento.endTime | date: 'HH:mm'}}
+            </div>
+          </ng-template>
+
         </div>
         <div class="lugar-evento"><ion-icon src="/assets/place.svg"></ion-icon> {{evento.place}}</div>
         <div class="descripcion-evento">{{evento.description}}</div>
@@ -170,9 +218,9 @@
           <div>{{evento.notify?'Activada':'Desactivada'}}</div>
         </div>
         <div class="opciones-evento">
-          <button *ngIf="usuario==evento.author">Editar</button>
-          <button *ngIf="usuario==evento.author">Eliminar</button>
-          <button>Volver</button>
+          <button *ngIf="usuario==evento.author" (click)="editarClick(evento)">Editar</button>
+          <button *ngIf="usuario==evento.author" (click)="eliminarEvento()">Eliminar</button>
+          <button (click)="isEventOpen = false;">Volver</button>
         </div>
       </div>
     </ng-template>
@@ -182,13 +230,16 @@
     <div class="numero">
       {{view.dates[row*7+col].label}}
       <div class="indicator-container">
-        <div class="event-indicator" *ngIf="view.dates[row*7+col].events.length > 0"></div>
+        <div class="event-indicator" *ngIf="view.dates[row*7+col].events.length > 0">
+          {{numerosRomanos[view.dates[row*7+col].events.length - 1]}}
+        </div>
       </div>
     </div>
   </ng-template>
 
   <ng-template #weekviewAllDayEventTemplate let-displayEvent="displayEvent">
-    <div class="calendar-event-inner">{{displayEvent.event.title}}</div>
+    <div class="calendar-event-inner alldayweek">{{displayEvent.event.title}}</div>
   </ng-template>
+
 
 </ion-content>

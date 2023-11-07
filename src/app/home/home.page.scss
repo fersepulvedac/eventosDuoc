@@ -49,6 +49,8 @@ header {
 
 #cuerpo {
   height: 86vh;
+  overflow: hidden;
+  position: relative;
 }
 
 .calendar-container {
@@ -211,6 +213,10 @@ header {
 }
 
 footer {
+  background-color: var(--fondo-eventos);
+}
+
+.footer {
   height: 7vh;
   background-color: var(--fondo-footer);
   display: flex;
@@ -420,33 +426,7 @@ input {
   filter: drop-shadow(2px 2px 6px #00000026);
 }
 
-.checked {
-  background-color: #EF3686;
-  width: 2rem;
-  height: 2rem;
-  min-height: 2rem;
-  max-height: 2rem;
-  outline: 1px #d4d4d4 solid;
-  border-radius: 3px;
-  padding: 3px;
-  filter: drop-shadow(2px 2px 6px #00000026);
-}
 
-.unchecked {
-  width: 2rem;
-  height: 2rem;
-  min-height: 2rem;
-  max-height: 2rem;
-  background-color: var(--fondo-input);
-  outline: 1px #d4d4d4 solid;
-  border-radius: 3px;
-
-  img {
-    opacity: 0;
-  }
-
-  filter: drop-shadow(2px 2px 6px #00000026);
-}
 
 ion-datetime {
   font-size: 14px;
@@ -496,7 +476,7 @@ ion-datetime {
   border: 1px burlywood solid;
   background-color: transparent;
   border-radius: 5px;
-  color: #fff;
+  color: var(--texto-eventos);
 }
 
 .titulo-evento {
@@ -508,6 +488,31 @@ ion-datetime {
 .descripcion-evento {
   padding: 0px 10%;
   text-align: center;
+  word-break: break-all;
+}
+
+.icon-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+
+  p {
+    font-size: .5rem;
+    color: var(--texto-eventos);
+  }
+}
+
+.icon-opciones-modo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  filter: drop-shadow(2px 4px 6px black);
+  p {
+    font-size: .5rem;
+    color: var(--texto-eventos);
+  }
 }
 
 ion-modal {
@@ -532,20 +537,27 @@ ion-modal {
 }
 
 #opciones-modo {
-  // outline: 1px red solid;
-  transform: translateX(-60px);
+  opacity: 0;
+  transform: translateX(calc(((100vw - 7.5rem)/6) - 0.25rem)) translateY(calc(6rem + 30px + 8vh));
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   font-size: 2rem;
-  row-gap: 5px;
-  bottom: 8vh;
-  left: 20px;
-  ion-icon{
-     color: var(--color-icon-header);
-     filter: drop-shadow(2px 4px 6px black);
+  row-gap: 2px;
+  bottom: 10px;
+
+  // left: 20px;
+  ion-icon {
+    color: var(--color-icon-header);
+    // filter: drop-shadow(2px 4px 6px black);
+    //  outline: 1px red solid;
   }
- z-index: 10;
+
+  z-index: 10;
+}
+
+.incompleto{
+  background-color: #EF3686;
 }
